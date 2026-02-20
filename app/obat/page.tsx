@@ -100,80 +100,83 @@ async function ObatList() {
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {obatList.map((obat: any, index: number) => {
-          const brandName =
-            obat.openfda?.brand_name?.[0] ||
-            obat.openfda?.generic_name?.[0] ||
-            obat.openfda?.substance_name?.[0] ||
-            obat._searchName?.toUpperCase() ||
-            "Obat Tanpa Nama";
+        {
+          // @ts-ignore
+          obatList.map((obat: any, index: number) => {
+            const brandName =
+              obat.openfda?.brand_name?.[0] ||
+              obat.openfda?.generic_name?.[0] ||
+              obat.openfda?.substance_name?.[0] ||
+              obat._searchName?.toUpperCase() ||
+              "Obat Tanpa Nama";
 
-          const kegunaan =
-            obat.indications_and_usage?.[0] ||
-            obat.purpose?.[0] ||
-            obat.description?.[0] ||
-            "Informasi tidak tersedia";
+            const kegunaan =
+              obat.indications_and_usage?.[0] ||
+              obat.purpose?.[0] ||
+              obat.description?.[0] ||
+              "Informasi tidak tersedia";
 
-          const kegunaanShort =
-            kegunaan.length > 120
-              ? kegunaan.substring(0, 120) + "..."
-              : kegunaan;
+            const kegunaanShort =
+              kegunaan.length > 120
+                ? kegunaan.substring(0, 120) + "..."
+                : kegunaan;
 
-          return (
-            <div
-              key={index}
-              className="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100 dark:border-gray-700 animate-fade-in"
-              style={{ animationDelay: `${index * 50}ms` }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            return (
+              <div
+                key={index}
+                className="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100 dark:border-gray-700 animate-fade-in"
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
-              <div className="relative">
-                <span className="inline-block bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs font-semibold px-3 py-1 rounded-full mb-4">
-                  {obat._category}
-                </span>
+                <div className="relative">
+                  <span className="inline-block bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs font-semibold px-3 py-1 rounded-full mb-4">
+                    {obat._category}
+                  </span>
 
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {brandName}
-                </h3>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    {brandName}
+                  </h3>
 
-                {obat.openfda?.generic_name?.[0] &&
-                  obat.openfda.generic_name[0] !== brandName && (
-                    <p className="text-sm text-gray-400 dark:text-gray-500 mb-2 italic">
-                      Generic: {obat.openfda.generic_name[0]}
+                  {obat.openfda?.generic_name?.[0] &&
+                    obat.openfda.generic_name[0] !== brandName && (
+                      <p className="text-sm text-gray-400 dark:text-gray-500 mb-2 italic">
+                        Generic: {obat.openfda.generic_name[0]}
+                      </p>
+                    )}
+
+                  {obat.openfda?.manufacturer_name?.[0] && (
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                      🏭 {obat.openfda.manufacturer_name[0]}
                     </p>
                   )}
 
-                {obat.openfda?.manufacturer_name?.[0] && (
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                    🏭 {obat.openfda.manufacturer_name[0]}
-                  </p>
-                )}
+                  <div className="mb-4">
+                    <p className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">
+                      Kegunaan:
+                    </p>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                      {kegunaanShort}
+                    </p>
+                  </div>
 
-                <div className="mb-4">
-                  <p className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">
-                    Kegunaan:
-                  </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                    {kegunaanShort}
-                  </p>
+                  {obat.openfda?.route?.[0] && (
+                    <p className="text-sm text-blue-600 dark:text-blue-400 mb-4 flex items-center gap-1">
+                      <span>📋</span> Cara: {obat.openfda.route[0]}
+                    </p>
+                  )}
+
+                  <Link
+                    href={`/obat/${encodeURIComponent(obat._searchName)}`}
+                    className="block w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white text-center py-3 px-4 rounded-xl hover:from-blue-700 hover:to-blue-600 transition-all duration-300 font-semibold group-hover:scale-105"
+                  >
+                    Lihat Detail →
+                  </Link>
                 </div>
-
-                {obat.openfda?.route?.[0] && (
-                  <p className="text-sm text-blue-600 dark:text-blue-400 mb-4 flex items-center gap-1">
-                    <span>📋</span> Cara: {obat.openfda.route[0]}
-                  </p>
-                )}
-
-                <Link
-                  href={`/obat/${encodeURIComponent(obat._searchName)}`}
-                  className="block w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white text-center py-3 px-4 rounded-xl hover:from-blue-700 hover:to-blue-600 transition-all duration-300 font-semibold group-hover:scale-105"
-                >
-                  Lihat Detail →
-                </Link>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        }
       </div>
 
       {obatList.length === 0 && (

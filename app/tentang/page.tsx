@@ -139,7 +139,6 @@ export default function TentangPage() {
                 key={index}
                 className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-xl transition text-center"
               >
-                <div className="text-5xl mb-4">{feature.icon}</div>
                 <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-2">
                   {feature.title}
                 </h3>
@@ -162,7 +161,6 @@ export default function TentangPage() {
                 key={index}
                 className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center hover:shadow-lg transition"
               >
-                <div className="text-6xl mb-4">{member.icon}</div>
                 <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-2">
                   {member.name}
                 </h3>
