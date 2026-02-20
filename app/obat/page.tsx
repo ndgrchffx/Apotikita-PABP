@@ -100,6 +100,7 @@ async function ObatList() {
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        // @ts-ignore
         {obatList.map((obat: any, index: number) => {
           const brandName =
             obat.openfda?.brand_name?.[0] ||
